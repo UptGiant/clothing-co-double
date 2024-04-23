@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothing Co - Simplified Shopping Cart</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        .navbar, .footer { background: #333; color: white; padding: 10px 0; text-align: center; }
+        .main-content { padding: 20px; }
+        .product, .cart-item { border: 1px solid #ddd; margin: 10px 0; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+        button { padding: 5px 10px; }
+        #cart { display: none; padding: 20px; background: #f1f1f1; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">Clothing Co</div>
+
+<div class="main-content">
+    <div id="products">
+        <h2>Products</h2>
+        <!-- Products will be added here via JavaScript -->
+    </div>
+    <button onclick="toggleCart()">Show Cart</button>
+    <div id="cart">
+        <h2>Cart</h2>
+        <!-- Cart items will be listed here -->
+    </div>
+</div>
+
+<div class="footer">© 2023 Clothing Co</div>
+
+<script>
+    const products = [
+        { id: 1, name: "T-shirt", price: 20 },
+        { id: 2, name: "Jeans", price: 40 },
+        { id: 3, name: "Hoodie", price: 60 },
+    ];
+    const cart = [];
+
+    function addToCart(productId) {
+        const product = products.find(product => product.id === productId);
+        if (product) {
+            cart.push(product);
+            updateCartView();
+        }
+    }
+
+    function showProducts() {
+        const productsContainer = document.getElementById('products');
+        products.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.className = 'product';
+            productElement.innerHTML = `
+                ${product.name} - $${product.price}
+                <button onclick="addToCart(${product.id})">Add to Cart</button>
+            `;
+            productsContainer.appendChild(productElement);
+        });
+    }
+
+    function updateCartView() {
+        const cartContainer = document.getElementById('cart');
+        cartContainer.innerHTML = '<h2>Cart</h2>'; // Reset cart view
+        cart.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'cart-item';
+            itemElement.textContent = `${item.name} - $${item.price}`;
+            cartContainer.appendChild(itemElement);
+        });
+    }
+
+    function toggleCart() {
+        const cart = document.getElementById('cart');
+        cart.style.display = cart.style.display === 'block' ? 'none' : 'block';
+    }
+
+    showProducts();
+</script>
+
+</body>
+</html>
